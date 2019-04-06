@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  aservice:
+    image: ${DOCKER_REGISTRY-}aservice
+    build:
+      context: .
+      dockerfile: AService/Dockerfile
+    ports:
+      - "9898:80"  
+    depends_on:
+      - jagerservice
+      - bservice
+    networks:  
+      backend:
+      
+  bservice:
+    image: ${DOCKER_REGISTRY-}bservice
+    build:
+      context: .
+      dockerfile: BService/Dockerfile
+    ports:
+      - "9899:80"
+    depends_on:
+      - jagerservice    
+    networks:  
+      backend:
+      
+  jagerservice:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411 
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
+    networks:  
+      backend:
+      
+networks:  
+  backend:      
+    driver: bridge
