@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  prometheusdemo:
+    image: ${DOCKER_REGISTRY}prometheusdemo
+    build:
+      context: .
+      dockerfile: PrometheusDemo/Dockerfile
+    ports:      
+      - "8054:80"      
+    networks:  
+      backend:
+
+  prometheus:
+    image: ${DOCKER_REGISTRY}prometheus
+    build:
+      context: .
+      dockerfile: Prometheus/Dockerfile
+    ports:      
+      - "9090:9090"         
+    networks:  
+      backend:
+
+  grafana:
+    image: grafana/grafana   
+    ports:      
+      - "3000:3000"
+    networks:  
+      backend:
+    depends_on:
+      - prometheus       
+
+networks:  
+  backend:      
+    driver: bridge
