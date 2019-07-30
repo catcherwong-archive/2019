@@ -17,30 +17,24 @@
             return DB.FirstOrDefault(x => x.Id.Equals(id));
         }
 
-
         public static List<DemoUser> GetList(int id, string name)
         {            
             return DB;
         }
 
-
         public static bool Save(string name, int age)
         {
             int id = new Random().Next(100, 100000);
-            DB.Add(new DemoUser { Id = id, Age = 22, Name = $"name-{id}", CreateTime = 2000 });
+            DB.Add(new DemoUser { Id = id, Age = age, Name = $"{name}-{id}", CreateTime = 2000 });
             return true;
-        }
-           
-
+        }           
     }
-
 
     public class DemoUser
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
-
 
         public int Age { get; set; } 
             
