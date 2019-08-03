@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option csharp_namespace = "MyBasedServiceA";
+
+package UserInfo;
+
+service UserInfoService {
+  rpc GetList(GetUserListRequest) returns (GetUserListReply){}
+  rpc GetById(GetUserByIdRequest) returns (GetUserByIdRelpy){}
+  rpc Save(SaveUserRequest) returns (SaveUserReply){}
+}
+
+
+message GetUserByIdRequest {
+	int32 id = 1;
+}
+
+message GetUserByIdRelpy{
+	int32 id = 1;
+	string name = 2;
+	int32 age = 3;
+	int64 create_time = 4;
+}
+
+message GetUserListRequest {
+	int32 id = 1;
+	string name = 2;	
+}
+
+message GetUserListReply {
+  message MsgItem {
+    int32 id = 1;
+	string name = 2;
+	int32 age = 3;
+	int64 create_time = 4;
+   }
+   int32 code = 1;
+   string msg = 2;
+   repeated MsgItem data = 3;
+}
+
+message SaveUserRequest {
+	string name = 1;
+	int32 age = 2;	
+}
+
+message SaveUserReply {
+   int32 code = 1;
+   string msg = 2;
+}

@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  xxxserver1:
+    image: ${DOCKER_REGISTRY-}xxxserver
+    build:
+      context: .
+      dockerfile: MyBasedServiceA/Dockerfile
+    ports:
+      - "9999:9999"  # 绑定容器的9999端口到主机的9999端口
+    depends_on:
+      - consuldev      
+    networks:  
+      backend:
+
+  xxxserver2:
+    image: ${DOCKER_REGISTRY-}xxxserver
+    build:
+      context: .
+      dockerfile: MyBasedServiceA/Dockerfile
+    ports:
+      - "9995:9999"   # 绑定容器的9999端口到主机的9995端口
+    depends_on:
+      - consuldev      
+    networks:  
+      backend:      
+      
+  xxxclient:
+    image: ${DOCKER_REGISTRY-}xxxclient
+    build:
+      context: .
+      dockerfile: XXXService/Dockerfile
+    ports:
+      - "9000:80"
+    depends_on:
+      - consuldev    
+      - xxxserver1
+      - xxxserver2
+    networks:  
+      backend:
+
+  consuldev:
+    image: consul:latest    
+    ports:
+      - "8300:8300"
+      - "8400:8400"
+      - "8500:8500"    
+    networks:  
+      backend:
+
+networks:  
+  backend:      
+    driver: bridge
