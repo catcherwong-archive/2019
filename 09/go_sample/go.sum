@@ -1,5 +1,7 @@
 github.com/go-redis/redis v6.15.2+incompatible h1:9SpNVG76gr6InJGxoZ6IuuxaCOQwDAhzyXg+Bs+0Sb4=
 github.com/go-redis/redis v6.15.2+incompatible/go.mod h1:NAIEuMOZ/fxfXJIrKDQDz8wamY7mA7PouImQ2Jvg6kA=
+github.com/lib/pq v1.2.0 h1:LXpIM/LZ5xGFhOpXAQUIMM1HdyqzVYM13zNdjCEEcA0=
+github.com/lib/pq v1.2.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/newhook/go-symbols v0.0.0-20151212134530-b75dfefa0d23 h1:bXKgb2O/gIrZd/smUeP3OJcAt1ey3UV+cPYT+mRUNzs=
 github.com/newhook/go-symbols v0.0.0-20151212134530-b75dfefa0d23/go.mod h1:9RIESfVnNNAkdTKNuEYS0rEkXXM2HYfchPD4xXNx1CU=
 github.com/nsf/gocode v0.0.0-20190302080247-5bee97b48836 h1:oc3CL18CoGhyOQJ7HDa9gJAde33bwI8Vi28zLdIzJVc=

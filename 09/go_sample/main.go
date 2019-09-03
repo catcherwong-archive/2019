@@ -8,7 +8,8 @@ import (
 func main() {
 
 	b.ShowBasicDemo()
-	b.ShowJsonDemo()
-	b.ShowHttpDemo()
-	db.ShowRedisDemo()
+	// b.ShowJsonDemo()
+	// b.ShowHttpDemo()
+	db.ShowPgDemo()
+	// db.ShowRedisDemo()
 }
