@@ -2,7 +2,8 @@ package main
 
 import (
 	b "go_sample/basic"
-	"go_sample/db"
+	_ "go_sample/db"
+	"go_sample/gormdemo"
 )
 
 func main() {
@@ -10,6 +11,8 @@ func main() {
 	b.ShowBasicDemo()
 	// b.ShowJsonDemo()
 	// b.ShowHttpDemo()
-	db.ShowPgDemo()
+	// db.ShowPgDemo()
 	// db.ShowRedisDemo()
+
+	gormdemo.Show()
 }
