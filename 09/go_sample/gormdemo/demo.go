@@ -25,12 +25,42 @@ func Show() {
 
 	fmt.Println(db.HasTable("t1"))
 
-	var s Student
+	// // find all
+	// var arr []Student
+	// db.Debug().Find(&arr)
+	// fmt.Println(arr)
 
-	db.Debug().Where("name = ?", "catcher").First(&s)
+	// // limit offset
+	// var arr1 []Student
+	// db.Debug().Offset(1).Limit(2).Find(&arr1)
+	// fmt.Println(arr1)
 
-	fmt.Println(s)
+	// // find by name
+	// var s Student
+	// db.Debug().Where("name = ?", "catcher").First(&s)
+	// fmt.Println(s)
 
+	// // insert
+	// s1 := Student{Name: "wong", Gender: "1", CreateTime: time.Now().UnixNano() / 1e6}
+	// db.Debug().Create(&s1)
+	// db.Find(&arr)
+	// fmt.Println(arr)
+
+	// var s2 Student
+	// db.Debug().Model(&s2).Where("name = ?", "wong").Update("gender", "2")
+	// db.Find(&arr)
+	// fmt.Println(arr)
+
+	// db.Debug().Where("name = ?", "wong").Delete(Student{})
+	// db.Find(&arr)
+	// fmt.Println(arr)
+
+	var n string
+	var t int64
+	r := db.Raw(`SELECT name, create_time FROM "t1"  WHERE name = ? limit 1`, "catcher").Row()
+	r.Scan(&n, &t)
+
+	fmt.Println(n, t)
 }
 
 func (Student) TableName() string {
