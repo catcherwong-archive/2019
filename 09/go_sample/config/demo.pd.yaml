@@ -1,0 +1,14 @@
+app_mode : pd
+
+mysql:
+  db1:
+    name: testMysqlDB
+    host: 127.0.0.1
+    port: 3306
+    user: root
+    pwd: 123456
+
+urls:
+  cnblogs: https://catcher1994.cnblogs.com
+  csharpcorner: https://www.c-sharpcorner.com/members/catcher-wong
+  github: https://github.com/catcherwong

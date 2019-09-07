@@ -2,8 +2,9 @@ package main
 
 import (
 	b "go_sample/basic"
+	"go_sample/config"
 	_ "go_sample/db"
-	"go_sample/gormdemo"
+	_ "go_sample/gormdemo"
 )
 
 func main() {
@@ -14,5 +15,9 @@ func main() {
 	// db.ShowPgDemo()
 	// db.ShowRedisDemo()
 
-	gormdemo.Show()
+	// flag.Parse()
+
+	// gormdemo.Show()
+	// config.ShowIni()
+	config.ShowYaml()
 }
