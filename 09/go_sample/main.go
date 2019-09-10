@@ -2,9 +2,11 @@ package main
 
 import (
 	b "go_sample/basic"
-	"go_sample/config"
+	_ "go_sample/config"
 	_ "go_sample/db"
 	_ "go_sample/gormdemo"
+
+	"go_sample/logdemo"
 )
 
 func main() {
@@ -19,5 +21,7 @@ func main() {
 
 	// gormdemo.Show()
 	// config.ShowIni()
-	config.ShowYaml()
+	// config.ShowYaml()
+
+	logdemo.ShowBasicLog()
 }
