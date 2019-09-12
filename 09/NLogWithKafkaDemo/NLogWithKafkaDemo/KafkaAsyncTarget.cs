@@ -20,8 +20,9 @@
         private readonly ConcurrentQueue<IProducer<Null, string>> _producerPool;
         private int _pCount;
         private int _maxSize;
-        private ConcurrentDictionary<string, IpObj> _cache;
 
+        // we should caching the instance ip here 
+        private ConcurrentDictionary<string, IpObj> _cache;
         private const string IP_CACHE_KEY = "memory:ipaddress";
 
         public KafkaAsyncTarget()
@@ -140,12 +141,19 @@
 
         protected override async Task WriteAsyncTask(LogEventInfo logEvent, CancellationToken cancellationToken)
         {
+            // Read from cache
             var instanceIp = GetCurrentIpFromCache();
 
+            // Using RenderLogEvent will allow NLog-Target to make optimal reuse of StringBuilder-buffers.
             string topic = base.RenderLogEvent(this.Topic, logEvent);
             string traceId = base.RenderLogEvent(this.TraceId, logEvent);
             string requestIp = base.RenderLogEvent(this.RequestIp, logEvent);
             string msg = base.RenderLogEvent(this.Layout, logEvent);
+
+            //string topic = this.Topic.Render(logEvent);
+            //string traceId = this.TraceId.Render(logEvent);
+            //string requestIp = this.RequestIp.Render(logEvent);
+            //string msg = this.Layout.Render(logEvent);
 
             var json = JsonConvert.SerializeObject(new
             {
