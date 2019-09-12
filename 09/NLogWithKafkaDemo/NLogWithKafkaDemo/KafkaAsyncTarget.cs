@@ -12,18 +12,23 @@
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
-   
+
     [Target("KafkaAsync")]
     public class KafkaAsyncTarget : AsyncTaskTarget
     {
+        // Pooling
         private readonly ConcurrentQueue<IProducer<Null, string>> _producerPool;
         private int _pCount;
         private int _maxSize;
+        private ConcurrentDictionary<string, IpObj> _cache;
+
+        private const string IP_CACHE_KEY = "memory:ipaddress";
 
         public KafkaAsyncTarget()
         {
             _producerPool = new ConcurrentQueue<IProducer<Null, string>>();
             _maxSize = 10;
+            _cache = new ConcurrentDictionary<string, IpObj>();
         }
 
         [RequiredParameter]
@@ -81,6 +86,34 @@
             return false;
         }
 
+        private string GetCurrentIpFromCache()
+        {
+            if (_cache.TryGetValue(IP_CACHE_KEY, out var obj))
+            {
+                return DateTimeOffset.UtcNow.Subtract(obj.Expiration) < TimeSpan.Zero
+                                    ? obj.Ip
+                                    : BuildCacheAndReturnIp();
+            }
+            else
+            {
+                return BuildCacheAndReturnIp();
+            }
+        }
+
+        private string BuildCacheAndReturnIp()
+        {
+            var newObj = new IpObj
+            {
+                Ip = GetCurrentIp(),
+                Expiration = DateTimeOffset.UtcNow.AddMinutes(5),
+            };
+
+            _cache.AddOrUpdate(IP_CACHE_KEY, newObj, (x, y) => newObj);
+
+            return newObj.Ip;
+        }
+
+
         private string GetCurrentIp()
         {
             var instanceIp = "127.0.0.1";
@@ -107,12 +140,12 @@
 
         protected override async Task WriteAsyncTask(LogEventInfo logEvent, CancellationToken cancellationToken)
         {
-            var instanceIp = GetCurrentIp();
+            var instanceIp = GetCurrentIpFromCache();
 
-            string topic = this.Topic.Render(logEvent);
-            string traceId = this.TraceId.Render(logEvent);
-            string requestIp = this.RequestIp.Render(logEvent);
-            string msg = this.Layout.Render(logEvent);
+            string topic = base.RenderLogEvent(this.Topic, logEvent);
+            string traceId = base.RenderLogEvent(this.TraceId, logEvent);
+            string requestIp = base.RenderLogEvent(this.RequestIp, logEvent);
+            string msg = base.RenderLogEvent(this.Layout, logEvent);
 
             var json = JsonConvert.SerializeObject(new
             {
