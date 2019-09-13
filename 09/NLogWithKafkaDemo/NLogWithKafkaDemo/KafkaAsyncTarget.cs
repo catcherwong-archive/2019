@@ -121,8 +121,6 @@
 
             try
             {
-                IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
-
                 foreach (var ipAddr in Dns.GetHostAddresses(Dns.GetHostName()))
                 {
                     if (ipAddr.AddressFamily.ToString() == "InterNetwork")
