@@ -6,12 +6,13 @@ import (
 	_ "go_sample/db"
 	_ "go_sample/gormdemo"
 
-	"go_sample/logdemo"
+	_ "go_sample/logdemo"
 )
 
 func main() {
 
-	b.ShowBasicDemo()
+	// b.ShowBasicDemo()
+	b.ShowTime()
 	// b.ShowJsonDemo()
 	// b.ShowHttpDemo()
 	// db.ShowPgDemo()
@@ -23,5 +24,5 @@ func main() {
 	// config.ShowIni()
 	// config.ShowYaml()
 
-	logdemo.ShowBasicLog()
+	// logdemo.ShowBasicLog()
 }
