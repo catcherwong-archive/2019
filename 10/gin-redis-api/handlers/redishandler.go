@@ -4,6 +4,7 @@ import (
 	"gin-redis-api/util"
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"time"
 )
 
@@ -19,11 +20,7 @@ func GetApi(c *gin.Context) {
 		log.Println("can not get value from redis")
 	}
 
-	c.JSON(200, gin.H{
-		"code": 0,
-		"data": r,
-		"msg":  "ok",
-	})
+	buildGinJson(c, 0, "ok", r)
 }
 
 func PostApi(c *gin.Context) {
@@ -83,7 +80,7 @@ func AddCountApi(c *gin.Context) {
 }
 
 func buildGinJson(c *gin.Context, code int, msg string, data interface{}) {
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  msg,
 		"data": data,
