@@ -35,3 +35,8 @@ curl -X POST -k http://localhost:8080/hello_world -d '{"name":"catcher wong"}'
 {"message":"hello, catcher wong"}
 ```
 
+## With Swagger
+
+visit `http://localhost:8080/swagger-ui/`
+
+[](./swagger.png)

@@ -3,6 +3,19 @@ syntax = "proto3";
 package protos;
 
 import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+		title: "grpc gateway sample";
+		version: "1.0";	
+		license: {
+			name: "MIT";			
+		};
+  };
+  schemes: HTTP;
+};
 
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {
