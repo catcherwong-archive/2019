@@ -39,4 +39,4 @@ curl -X POST -k http://localhost:8080/hello_world -d '{"name":"catcher wong"}'
 
 visit `http://localhost:8080/swagger-ui/`
 
-[](./swagger.png)
+![](./swagger.png)
